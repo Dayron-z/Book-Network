@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: Rlwl2023*  # Required root password
+      MYSQL_DATABASE: book_social_network  # Initial database (optional)
+    ports:
+      - "3306:3306"  # Expose MySQL on local port 3307
+    volumes:
+      - mysql_data:/var/lib/mysql  # Mount a persistent volume for MySQL data
+    networks:
+      - spring-demo  # Connect the MySQL container to the spring-demo network
+    restart: unless-stopped  # Restart policy for the MySQL container
+
+  mail-dev:
+    container_name: mail-dev-bsn
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+
+volumes:
+  mysql_data:
+    driver: local  # Specify the volume driver as local
+
+networks:
+  spring-demo:
+    driver: bridge  # Define the spring-demo network with bridge driver
