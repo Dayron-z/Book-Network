@@ -1,11 +1,8 @@
 package com.pageconnect.booknetwork.user;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -16,9 +13,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 public class Token {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String token;
     private LocalDateTime createdAt;
     private LocalDateTime expiredAt;
     private LocalDateTime validatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
 }
