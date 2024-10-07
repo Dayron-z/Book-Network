@@ -35,6 +35,9 @@ public class JwtFilter extends OncePerRequestFilter /*It is executed once for ea
 
         if (request.getServletPath().startsWith("/api/v1/auth")){  /*---> Authentication route*/
             System.out.println("Allowing access to auth route");
+            System.out.println("Req"+ request);
+            System.out.println("Req servletPath"+ request.getServletPath());
+            System.out.println("Resp" + response);
             filterChain.doFilter(request, response);
             return;
         }
@@ -46,11 +49,12 @@ public class JwtFilter extends OncePerRequestFilter /*It is executed once for ea
 
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("llego1");
             filterChain.doFilter(request, response);
             return;
         }
 
-
+        System.out.println("llego2");
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
 
@@ -58,7 +62,9 @@ public class JwtFilter extends OncePerRequestFilter /*It is executed once for ea
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+            System.out.println("llego3");
             if (jwtService.isTokenValid(jwt, userDetails)){
+                System.out.println("llego4");
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -70,6 +76,7 @@ public class JwtFilter extends OncePerRequestFilter /*It is executed once for ea
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+        System.out.println("llego5");
 
         filterChain.doFilter(request, response);
     }

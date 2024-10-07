@@ -27,14 +27,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .cors(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req -> /*Authentication rules*/
                         req.requestMatchers(
                                 "/auth/**",
-                                "/auth/register",
-                                        "/api/v1/auth/**",
-                                "/api/v1/auth/register",
-                                        "/api/v1/auth/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",
                                         "/v3/api-docs/**",
@@ -44,12 +40,12 @@ public class SecurityConfig {
                                         "/configuration/security",
                                         "/swagger-ui/**",
                                         "/webjars/**",
-                                        "/swagger-ui.html"           /*---> Access is allowed to authorized users and to view documentation*/
+                                        "/swagger-ui.html"/*---> Access is allowed to authorized users and to view documentation*/
                         ).permitAll()
                                 .anyRequest()
                                 .authenticated()                 /*---> .anyRequest().authenticated():  This means that any request that is not in the requestMatcher's only way of accessing it is through an authenticated user */
                         )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore( jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

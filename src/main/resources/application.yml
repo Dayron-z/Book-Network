@@ -7,7 +7,14 @@ spring:
 springdoc:
   default-produces-media-type: application/json
 
+#Solved error
 server:
   servlet:
     context:
-      context-path: /api/v1
+      path: /api/v1
+
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG

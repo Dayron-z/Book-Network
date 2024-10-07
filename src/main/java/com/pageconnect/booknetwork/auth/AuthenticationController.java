@@ -17,13 +17,16 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> register(@RequestBody @Valid RegistrationRequest request) throws MessagingException {
         System.out.println("Register request received: " + request);
         authenticationService.register(request);
         return ResponseEntity.accepted().build();
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<String> publicEndpoint() {
+        return ResponseEntity.ok("Este es un endpoint público");
+    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(

@@ -39,7 +39,7 @@ public class AuthenticationService {
     private String activationURL;
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER").orElseThrow( () ->  new IllegalStateException("Role user was not found"));
-
+        System.out.println("llegué a register");
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -50,6 +50,7 @@ public class AuthenticationService {
                 .roles(List.of(userRole))
                 .build();
 
+        System.out.println("llegué a register");
 
         userRepository.save(user);
         sendValidationEmail(user); 
