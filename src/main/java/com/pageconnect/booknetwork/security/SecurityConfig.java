@@ -31,6 +31,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> /*Authentication rules*/
                         req.requestMatchers(
                                 "/auth/**",
+                                "/auth/register",
+                                        "/api/v1/auth/**",
+                                "/api/v1/auth/register",
                                         "/api/v1/auth/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",

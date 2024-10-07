@@ -31,9 +31,10 @@ public class JwtFilter extends OncePerRequestFilter /*It is executed once for ea
            @NonNull HttpServletResponse response,
            @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println("Request URL: " + request.getRequestURI()); // Agregar un log
+        System.out.println("Request URL: " + request.getRequestURI()); // Add a log
 
         if (request.getServletPath().startsWith("/api/v1/auth")){  /*---> Authentication route*/
+            System.out.println("Allowing access to auth route");
             filterChain.doFilter(request, response);
             return;
         }
