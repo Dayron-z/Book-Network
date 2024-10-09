@@ -84,7 +84,7 @@ public class AuthenticationService {
     }
 
     private String generateActivationCode(int length) {
-            String characters = "0123456789";
+        String characters = "0123456789";
         StringBuilder codeBuilder = new StringBuilder(); // Used to avoid creating multiple instances as with the String class.
         SecureRandom secureRandom = new SecureRandom();
 
@@ -104,16 +104,15 @@ public class AuthenticationService {
                         request.getEmail(),
                         request.getPassword()
                 )
-
         );
-        var claims = new HashMap<String, Object>();
+        var customClaims = new HashMap<String, Object>();
         var user = ((User) auth.getPrincipal());
-        claims.put("fullName", user.fullName());
-        var jwtToken = jwtService.generateToken(claims, user);
+        customClaims.put("fullName", user.fullName());
+        var jwtToken = jwtService.generateToken(customClaims, user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    @Transactional
+ /*   @Transactional*/
     public void activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token).orElseThrow(()-> new RuntimeException("Invalid Token") );
         if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())){

@@ -18,7 +18,6 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegistrationRequest request) throws MessagingException {
-        System.out.println("Register request received: " + request);
         authenticationService.register(request);
         return ResponseEntity.accepted().build();
     }
