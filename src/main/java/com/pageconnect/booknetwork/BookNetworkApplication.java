@@ -1,5 +1,6 @@
 package com.pageconnect.booknetwork;
 
+import com.pageconnect.booknetwork.book.Book;
 import com.pageconnect.booknetwork.role.Role;
 import com.pageconnect.booknetwork.role.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -13,10 +14,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableJpaAuditing
 @EnableAsync
 public class BookNetworkApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BookNetworkApplication.class, args);
 	}
+
+
+
 
 	@Bean
 	public CommandLineRunner runner(RoleRepository roleRepository){
@@ -26,5 +29,7 @@ public class BookNetworkApplication {
 			}
 		};
 	}
+
+
 
 }
