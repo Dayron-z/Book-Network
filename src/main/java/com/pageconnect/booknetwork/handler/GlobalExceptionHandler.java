@@ -1,5 +1,6 @@
 package com.pageconnect.booknetwork.handler;
 
+import com.pageconnect.booknetwork.exception.OpperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -68,6 +69,20 @@ public class GlobalExceptionHandler {
                                 .build()
                 );
     }
+
+
+    @ExceptionHandler(OpperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OpperationNotPermittedException exp){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exp){
